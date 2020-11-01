@@ -1,29 +1,65 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include<string.h>
+#include<stdlib.h>
 
-//Niestety nie dałem rady dokończyć programu, obejrzałem dwa ostatnie wykłady i zabrakło mi czasu. 
-//Jest 23:09 i na tą chwilę stanąłem na zrobieniu z tych liczb macierzy i wymnożeniu ich, więc dodaje co mam. 
- 
-int main(int argc, char *argv[])
+int wczytaj(FILE *fin, float tablica[][100])
 {
-    int wa;     //liczba_wierszy_macierzy_a
-    int ka;     //liczba_kolumn_macierzy_a
-    int wx;    //liczba_wierszy_macierzy_x
-    int kx;    //liczba_kolumn_macierzy_x
-    FILE *fin;
-    fin = fopen(argv[1], "r");
-    fscanf(fin, "%d", &wa);
-    fscanf(fin, "%d", &ka);
+    int wiersz = 0;
+    int kolumna = 0;
+    float liczba = 0;
 
-       FILE *fine;
-    fine = fopen(argv[2], "r");
-    fscanf(fine, "%d", &wx);
-    fscanf(fine, "%d", &kx);
+    fscanf(fin, "%d %d", &wiersz, &kolumna);
 
-    printf("%d %d %d %d\n", wa, ka, wx, kx); //wypisuje wiersze i kolumny
-    if(ka != wx)
-    printf("Tych macierzy nie da się pomnożyć.\n");
- 
+    for(int i = 0; i < wiersz; i++)
+    {
+    for(int j = 0; j  <kolumna; j++)
+        {
+        fscanf(fin, "%f", &liczba);
+        tablica[i][j] = liczba; //  przypisanie liczby to tablicy na miejsce i i j
+    }
+    }
+return wiersz;
+}
+
+void iloczyn(float macierz[][100], float wektor[][100], int wiersz1, int wiersz2)
+{
+    float wynik = 0;
+    printf("[ ");
+    for (int i = 0; i < wiersz1; i++)
+    {
+    for (int j = 0; j < wiersz2; j++)
+    {
+        wynik += macierz[i][j] * wektor[j][0];
+    }
+    printf("%f ", wynik);
+        wynik = 0; // zerowanie po kazdym wierszu
+    }
+    printf ("]\n");
+}
+
+int main (int argc, char *argv[])
+{
+FILE *fin1;
+FILE *fin2;
+
+    float macierz[100][100];
     
-} 
+    float wektor[100][100];
+
+int wiersz1;
+
+int wiersz2;
+    
+    fin1 = fopen(argv[1], "r");
+    
+    fin2 = fopen(argv[2], "r");
+
+    wiersz1 = wczytaj(fin1, macierz);
+    wiersz2 = wczytaj(fin2, wektor);
+
+    printf("(%d) ", wiersz1);
+    
+    iloczyn(macierz, wektor, wiersz1, wiersz2);
+
+    return 0;
+}
