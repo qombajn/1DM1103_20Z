@@ -10,16 +10,30 @@ int wczytaj(FILE *fin, float tablica[][100])
 
     fscanf(fin, "%d %d", &wiersz, &kolumna);
 
-    for(int i = 0; i < wiersz; i++)
-    {
-    for(int j = 0; j  <kolumna; j++)
-        {
-        fscanf(fin, "%f", &liczba);
-        tablica[i][j] = liczba; //  przypisanie liczby to tablicy na miejsce i i j
-    }
-    }
-return wiersz;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void iloczyn(float macierz[][100], float wektor[][100], int wiersz1, int wiersz2)
 {
