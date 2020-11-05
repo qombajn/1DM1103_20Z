@@ -80,8 +80,8 @@ printf("Tych macierzy nie da się odjąć.");
 else
 {
 struct macierz tab;
-for(int i=0; i<A.k; i++)
-    for(int j=0;i<B.w;j++)
+for(int j=0;j<B.w;j++)
+    for(int i=0; i<A.k; i++)
     {
     tab.tab[i][j] = A.tab[i][j] - B.tab[i][j];
     }
@@ -104,7 +104,7 @@ else
             for(int k = 0; k<A.k; k++)
             {
             float c = A.tab[i][k]*B.tab[k][j];
-            iloczyn.tab[i][j] += c;
+            c += iloczyn.tab[i][j];
             c=0;
             }
         } 
@@ -115,24 +115,25 @@ return iloczyn;
 struct macierz multiply(struct macierz A, float skalar)
 {
 struct macierz tab;
-for(int i=0; i<A.k; i++)
-    for(int j=0;i<A.w;j++)
+for(int j=0;j<A.w;j++)
+    for(int i=0; i<A.k; i++)
     {
     tab.tab[i][j] = A.tab[i][j] * skalar;
     }
 return tab;
 }
-double norm(struct macierz A) {
+float norm(struct macierz m) {
     float s = 0;
     int i,j;
 
-    for (i = 0; i < A.w; i++) {
-        for (j=0; j < A.k; j++) {
-            s += A.tab[i][j] * A.tab[i][j];
+    for (i = 0; i < m.w; i++) {
+        for (j=0; j < m.k; j++) {
+            s += m.tab[i][j] * m.tab[i][j];
         }
     }
-    return sqrt(s);
+    return s;
 }
+
 
 
 int main(int argc, char *argv[])
@@ -147,19 +148,25 @@ if(strcmp(argv[1], "sum")==0)
 {
 if(strcmp(argv[4],"W.txt")==0) // do pliku
 {
+fileW = fopen(argv[4],"w+");
 fileA = fopen(argv[2],"r");
-fileW - fopen(argv[4],"w");
+fileB = fopen(argv[3],"r");
 wczytaj(fileA, &A);
 wczytaj(fileB, &B);
 zapisz(argv[4],suma(A,B));
 fclose(fileW);
+fclose(fileA);
+fclose(fileB);
 }
 else // na tablice
 {
 fileA = fopen(argv[2],"r");
+fileB = fopen(argv[3],"r");
 wczytaj(fileA, &A);
 wczytaj(fileB, &B);
 wypisz(suma(A,B));
+fclose(fileA);
+fclose(fileB);
 }
 }
 else if(strcmp(argv[1], "subtract")==0)
@@ -167,35 +174,47 @@ else if(strcmp(argv[1], "subtract")==0)
 if(strcmp(argv[4],"W.txt")==0) // do pliku
 {
 fileA = fopen(argv[2],"r");
-fileW - fopen(argv[4],"w");
+fileW = fopen(argv[4],"w+");
+fileB = fopen(argv[3],"r");
 wczytaj(fileA, &A);
 wczytaj(fileB, &B);
 zapisz(argv[4],substract(A,B));
+fclose(fileA);
+fclose(fileB);
 fclose(fileW);
 }
 else // na tablice
 {
-fileA = fopen(argv[2],"r");    
+fileA = fopen(argv[2],"r");
+fileB = fopen(argv[3],"r");    
 wczytaj(fileA, &A);
 wczytaj(fileB, &B);
 wypisz(substract(A,B));
+fclose(fileA);
+fclose(fileB);
 }
 }
 else if(strcmp(argv[1], "prod")==0)
 {
 if(strcmp(argv[4],"W.txt")==0) // do pliku
 {
-fileW - fopen(argv[4],"w");
+fileA = fopen(argv[2],"r");
+fileW = fopen(argv[4],"w+");
+fileB = fopen(argv[3],"r");
 wczytaj(fileA, &A);
 wczytaj(fileB, &B);
 zapisz(argv[4],prod(A,B));
 fclose(fileW);
+fclose(fileA);
+fclose(fileB);
 }
 else // na tablice
 {
 wczytaj(fileA, &A);
 wczytaj(fileB, &B);
 wypisz(prod(A,B));
+fclose(fileA);
+fclose(fileB);
 }
 }
 else if(strcmp(argv[1], "multiply")==0)
@@ -203,11 +222,12 @@ else if(strcmp(argv[1], "multiply")==0)
 if(strcmp(argv[4],"W.txt")==0) // do pliku
 {
 fileA = fopen(argv[2],"r");
-fileW - fopen(argv[4],"w");
+fileW = fopen(argv[4],"w+");
 float skalar = atof(argv[3]);
 wczytaj(fileA, &A);
 zapisz(argv[4],multiply(A,skalar));
 fclose(fileW);
+fclose(fileA);
 }
 else // na tablice
 {
@@ -215,6 +235,7 @@ fileA = fopen(argv[2],"r");
 float skalar = atof(argv[3]);
 wczytaj(fileA, &A);
 wypisz(multiply(A,skalar));
+fclose(fileA);
 }
 }
 else if(strcmp(argv[1], "norm")==0)
@@ -222,22 +243,22 @@ else if(strcmp(argv[1], "norm")==0)
 if(strcmp(argv[3],"W.txt")==0) // do pliku
 {
 fileA = fopen(argv[2],"r");
-fileW - fopen(argv[3],"w");
+fileW = fopen(argv[3],"w+");
 wczytaj(fileA, &A);
 fprintf(fileW,"Norma macierzy wynosi:%f",norm(A));
 fclose(fileW);
+fclose(fileA);
 }
 else // na tablice
 {
 fileA = fopen(argv[2],"r");
 wczytaj(fileA, &A);
 printf("Norma macierzy wynosi:%f",norm(A));
+fclose(fileA);
 }
 }
 else
 {
     printf("Nie rozumiem człowieku");
 }
-
-return 0;
 }
