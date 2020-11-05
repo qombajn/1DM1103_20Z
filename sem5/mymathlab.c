@@ -148,25 +148,25 @@ if(strcmp(argv[1], "sum")==0)
 {
 if(strcmp(argv[4],"W.txt")==0) // do pliku
 {
-fileW = fopen(argv[4],"w+");
 fileA = fopen(argv[2],"r");
-fileB = fopen(argv[3],"r");
 wczytaj(fileA, &A);
+fclose(fileA);
+fileB = fopen(argv[3],"r");
 wczytaj(fileB, &B);
+fclose(fileB);
+fileW = fopen(argv[4],"w+");
 zapisz(argv[4],suma(A,B));
 fclose(fileW);
-fclose(fileA);
-fclose(fileB);
 }
 else // na tablice
 {
 fileA = fopen(argv[2],"r");
-fileB = fopen(argv[3],"r");
 wczytaj(fileA, &A);
-wczytaj(fileB, &B);
-wypisz(suma(A,B));
 fclose(fileA);
+fileB = fopen(argv[3],"r");
+wczytaj(fileB, &B);
 fclose(fileB);
+wypisz(suma(A,B));
 }
 }
 else if(strcmp(argv[1], "subtract")==0)
@@ -174,24 +174,24 @@ else if(strcmp(argv[1], "subtract")==0)
 if(strcmp(argv[4],"W.txt")==0) // do pliku
 {
 fileA = fopen(argv[2],"r");
-fileW = fopen(argv[4],"w+");
-fileB = fopen(argv[3],"r");
 wczytaj(fileA, &A);
-wczytaj(fileB, &B);
-zapisz(argv[4],substract(A,B));
 fclose(fileA);
+fileB = fopen(argv[3],"r");
+wczytaj(fileB, &B);
 fclose(fileB);
+fileW = fopen(argv[4],"w+");
+zapisz(argv[4],substract(A,B));
 fclose(fileW);
 }
 else // na tablice
 {
 fileA = fopen(argv[2],"r");
-fileB = fopen(argv[3],"r");    
 wczytaj(fileA, &A);
-wczytaj(fileB, &B);
-wypisz(substract(A,B));
 fclose(fileA);
+fileB = fopen(argv[3],"r");    
+wczytaj(fileB, &B);
 fclose(fileB);
+wypisz(substract(A,B));
 }
 }
 else if(strcmp(argv[1], "prod")==0)
@@ -199,35 +199,38 @@ else if(strcmp(argv[1], "prod")==0)
 if(strcmp(argv[4],"W.txt")==0) // do pliku
 {
 fileA = fopen(argv[2],"r");
-fileW = fopen(argv[4],"w+");
-fileB = fopen(argv[3],"r");
 wczytaj(fileA, &A);
+fclose(fileA);
+fileB = fopen(argv[3],"r");
 wczytaj(fileB, &B);
+fclose(fileB);
+fileW = fopen(argv[4],"w+");
 zapisz(argv[4],prod(A,B));
 fclose(fileW);
-fclose(fileA);
-fclose(fileB);
+
 }
 else // na tablice
 {
+fileA = fopen(argv[2],"r");
 wczytaj(fileA, &A);
+fclose(fileA);
+fileB = fopen(argv[3],"r");
+fclose(fileB);
 wczytaj(fileB, &B);
 wypisz(prod(A,B));
-fclose(fileA);
-fclose(fileB);
 }
 }
 else if(strcmp(argv[1], "multiply")==0)
 {
 if(strcmp(argv[4],"W.txt")==0) // do pliku
 {
-fileA = fopen(argv[2],"r");
-fileW = fopen(argv[4],"w+");
 float skalar = atof(argv[3]);
+fileA = fopen(argv[2],"r");
 wczytaj(fileA, &A);
+fclose(fileA);
+fileW = fopen(argv[4],"w+");
 zapisz(argv[4],multiply(A,skalar));
 fclose(fileW);
-fclose(fileA);
 }
 else // na tablice
 {
@@ -243,11 +246,12 @@ else if(strcmp(argv[1], "norm")==0)
 if(strcmp(argv[3],"W.txt")==0) // do pliku
 {
 fileA = fopen(argv[2],"r");
-fileW = fopen(argv[3],"w+");
 wczytaj(fileA, &A);
+fclose(fileA);
+fileW = fopen(argv[3],"w+");
 fprintf(fileW,"Norma macierzy wynosi:%f",norm(A));
 fclose(fileW);
-fclose(fileA);
+
 }
 else // na tablice
 {
