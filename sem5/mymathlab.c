@@ -27,33 +27,31 @@ void wczytaj(FILE * fin, struct macierz *m)
 void wypisz(struct macierz *m) 
 {
 {
-printf("To jest wynik\n[\t");
+printf("To jest wynik\n[");
 for(int i = 0; i < m->w; i++)
     {
         for(int j = 0; j < m->k; j++)
         {
             printf("%.2f\t", m->tab[i][j]); //żeby było ładnie przejrzyście i czytelnie to dałem dwie po przecinku 
             if(j+1 == m->k)
-            printf("]\n");
+            printf("\b\b]\n");
         } 
     if(i+1 != m->w)   
-    printf("[\t");
+    printf("[");
     }
 }
+
 }
 void zapisz(FILE * fin,struct macierz *m)
 {
 fprintf(fin,"%d\n%d\n",m->w,m->k);
 for(int i = 0; i < m->w; i++)
-    {
         for(int j = 0; j <m->k; j++)
         {
             fprintf(fin,"%.2f\t",m->tab[i][j]);
             if(j+1 == m->k)
             fprintf(fin,"\n");
         }  
-    }
-fclose(fin);
 }
 void suma(struct macierz *A, struct macierz *B, struct macierz *W)
 {
@@ -144,24 +142,35 @@ FILE * fileW;
 
 if(strcmp(argv[1], "sum")==0)
 {
+if(argv[4]==NULL) // do pliku
 {
-fileA = fopen(argv[2],"r"); //odtąd
+fileA = fopen(argv[2],"r");
 wczytaj(fileA,&A);
 fclose(fileA);
 fileB = fopen(argv[3],"r");
 wczytaj(fileB,&B);
-fclose(fileB);              //dotąd chciałem wkleić przed pętle ale się nie dało bo potem argv[3] był potrzebny do skalaru
+fclose(fileB);
 suma(&A,&B,&W);
-wypisz(&W);                 
+wypisz(&W);
 }
-    if(strcmp(argv[4],"do_b.txt")==0) // do pliku
+
+    if(argv[4]!=NULL) // do pliku
     {
+    fileA = fopen(argv[2],"r");
+    wczytaj(fileA,&A);
+    fclose(fileA);
+    fileB = fopen(argv[3],"r");
+    wczytaj(fileB,&B);
+    fclose(fileB);
+    suma(&A,&B,&W);
     fileW = fopen(argv[4],"w+");
     zapisz(fileW,&W);
-    fclose(fileW);
+    fclose(fileW); 
     }
 }
 else if(strcmp(argv[1], "subtract")==0)
+{
+if(argv[4]==NULL) // do pliku
 {
 fileA = fopen(argv[2],"r");
 wczytaj(fileA,&A);
@@ -171,14 +180,25 @@ wczytaj(fileB,&B);
 fclose(fileB);
 subtract(&A,&B,&W);
 wypisz(&W);
-    if(strcmp(argv[4],"do_b.txt")==0) // do pliku
+}
+
+    if(argv[4]!=NULL) // do pliku
     {
+    fileA = fopen(argv[2],"r");
+    wczytaj(fileA,&A);
+    fclose(fileA);
+    fileB = fopen(argv[3],"r");
+    wczytaj(fileB,&B);
+    fclose(fileB);
+    subtract(&A,&B,&W);
     fileW = fopen(argv[4],"w+");
     zapisz(fileW,&W);
-    fclose(fileW);
+    fclose(fileW); 
     }
 }
 else if(strcmp(argv[1], "prod")==0)
+{
+if(argv[4]==NULL) // do pliku
 {
 fileA = fopen(argv[2],"r");
 wczytaj(fileA,&A);
@@ -188,8 +208,17 @@ wczytaj(fileB,&B);
 fclose(fileB);
 prod(&A,&B,&W);
 wypisz(&W);
-    if(strcmp(argv[4],"do_b.txt")==0) // do pliku
+}
+
+    if(argv[4]!=NULL) // do pliku
     {
+    fileA = fopen(argv[2],"r");
+    wczytaj(fileA,&A);
+    fclose(fileA);
+    fileB = fopen(argv[3],"r");
+    wczytaj(fileB,&B);
+    fclose(fileB);
+    prod(&A,&B,&W);
     fileW = fopen(argv[4],"w+");
     zapisz(fileW,&W);
     fclose(fileW); 
@@ -197,14 +226,23 @@ wypisz(&W);
 }
 else if(strcmp(argv[1], "multiply")==0)
 {
+if(argv[4]==NULL)    
+{
 fileA = fopen(argv[2],"r");
 wczytaj(fileA,&A);
 fclose(fileA);
 float skalar = atof(argv[3]);
 multiply(&A,skalar,&W);
 wypisz(&W);
-    if(strcmp(argv[4],"do_b.txt")==0) // do pliku
+}
+
+    if(argv[4]!=NULL) // do pliku
     {
+    fileA = fopen(argv[2],"r");
+    wczytaj(fileA,&A);
+    fclose(fileA);
+    float skalar = atof(argv[3]);
+    multiply(&A,skalar,&W);
     fileW = fopen(argv[4],"w+");
     zapisz(fileW,&W);
     fclose(fileW);  
@@ -212,6 +250,7 @@ wypisz(&W);
 }
 else if(strcmp(argv[1], "norm")==0)
 {
+if(argv[3]==NULL)
 {
 fileA = fopen(argv[2],"r");
 wczytaj(fileA,&A);
@@ -219,8 +258,11 @@ fclose(fileA);
 float s = sqrt(norm(&A));
 printf("Norma zadanej macierzy wynosi: %.3f\n",s);
 }
-    if(strcmp(argv[3],"do_b.txt")==0) // do pliku
+    if(argv[3]!=NULL) // do pliku
     {
+    fileA = fopen(argv[2],"r");
+    wczytaj(fileA,&A);
+    fclose(fileA);
     float s = sqrt(norm(&A));
     fileW = fopen(argv[3],"w+");
     fprintf(fileW,"Norma zadanej macierzy wynosi: %.3f\n",s);
