@@ -15,7 +15,6 @@ void wczytaj(FILE * fin, struct macierz *m)
     int i,j;
     fscanf(fin, "%d", &m->w);
     fscanf(fin, "%d", &m->k);
-
     for (i=0; i < m->w; i++) 
     {
         for (j=0; j < m->k; j++) 
@@ -55,9 +54,10 @@ for(int i = 0; i < m->w; i++)
 }
 void suma(struct macierz *A, struct macierz *B, struct macierz *W)
 {
-if((A->w!=B->w)&&(A->k!=B->k))
+if((A->w != B->w)||(A->k!=B->k))
 {
 printf("Tych macierzy nie da się dodać.\n");
+exit(0);
 }
 else
 {
@@ -70,9 +70,10 @@ for(int i=0; i < A->k; i++)
 }
 void subtract(struct macierz *A, struct macierz *B, struct macierz *W)
 {
-if((A->w!=B->w)&&(A->k!=B->k))
+if((&A->w != &B->w)||(&A->k!=&B->k))
 {
 printf("Tych macierzy nie da się odjąć.\n");
+exit(0);
 }
 else
 {
@@ -88,6 +89,7 @@ void prod(struct macierz *A, struct macierz *B, struct macierz *W)
 if(A->k!=B->w)
 {
 printf("Tych macierzy nie pomnoży się niestety\n");
+exit(0);
 }
 else
 {
