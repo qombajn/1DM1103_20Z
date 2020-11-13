@@ -116,8 +116,8 @@ void najtrudniejszy_przedmiot(student dane[100], int ile_rekordow) {
         srednia[i] = srednia[i]/ile_dodawan[i];
     }   
     
-   for (i=0;i<ile_przedmiotow; i++) 
-   printf("Przedmiot [%d]: %s średnia: %f\n", i+1, kod_przed[i], srednia[i]);
+   //for (i=0;i<ile_przedmiotow; i++) 
+  // printf("Przedmiot [%d]: %s średnia: %f\n", i+1, kod_przed[i], srednia[i]);
 
     for (i=0; i < ile_przedmiotow; i++) {
         if (najlepsza > srednia[i]) {
@@ -161,8 +161,8 @@ void najlatwiejszy_przedmiot(student dane[100], int ile_rekordow) {
         srednia[i] = srednia[i]/ile_dodawan[i];
     }   
     
-   for (i=0;i<ile_przedmiotow; i++) 
-   printf("Przedmiot [%d] %s : %s średnia: %f\n", i+1, nazwa_przed[i], kod_przed[i], srednia[i]);
+  // for (i=0;i<ile_przedmiotow; i++) 
+  // printf("Przedmiot [%d] %s : %s średnia: %f\n", i+1, nazwa_przed[i], kod_przed[i], srednia[i]);
 
     for (i=0; i < ile_przedmiotow; i++) {
         if (najlepsza < srednia[i]) {
