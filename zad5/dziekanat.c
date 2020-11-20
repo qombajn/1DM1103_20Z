@@ -101,6 +101,10 @@ void najlepszy_student(student dane[100], int ile_rekordow) {
     int pozycja;
     int najlepsza_pozycja;
     float najlepsza = 0.0f;
+    for(int j = 0; j<100; j++){
+        sumy_ects[j] = 0;
+        sumy_wazonych_ocen[j] = 0;
+    }
 
     ile_studentow = znajdz_studentow(nr_albumow, dane, ile_rekordow);
 
@@ -111,9 +115,9 @@ void najlepszy_student(student dane[100], int ile_rekordow) {
         sumy_ects[pozycja] += dane[i].ects;
     }    
 
-   // for (i=0;i<ile_studentow; i++) 
-    //    printf("Student [%d]: %s - %f:%d - %f \n", i+1, nr_albumow[i], 
-     //   sumy_wazonych_ocen[i], sumy_ects[i], sumy_wazonych_ocen[i] / sumy_ects[i]);
+  // for (i=0;i<ile_studentow; i++) 
+      // printf("Student [%d]: %s - %f:%d - %f \n", i+1, nr_albumow[i], 
+      // sumy_wazonych_ocen[i], sumy_ects[i], sumy_wazonych_ocen[i] / sumy_ects[i]);
 
     for (i=0; i < ile_studentow; i++) {
         if (najlepsza < sumy_wazonych_ocen[i] / sumy_ects[i]) {
