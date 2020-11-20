@@ -1,4 +1,6 @@
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "studenci.h"
 void najtrudniejszy_przedmiot(student dane[100], int ile_rekordow) {
     char kod_przed[100][10];

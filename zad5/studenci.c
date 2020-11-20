@@ -1,8 +1,10 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "studenci.h"
+
+
+
 
 
 int wczytaj(student dane[100], char *fnazwa) {
