@@ -1,5 +1,4 @@
 
-
 typedef struct _student {
     char imie[25];
     char nazwisko[50];
